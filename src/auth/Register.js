@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signUpUser } from "../redux/authSlice";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
   const registerHandle = () => {
     console.table(name, setName, password);
+    dispatch(signUpUser({ name, email }, password));
   };
+
   return (
     <div className="container ">
       <div className="col-md-4 mt-5">
@@ -42,10 +48,7 @@ const Register = () => {
           />
         </div>
 
-        <button
-          onClick={registerHandle}
-          className="my-3 btn btn-primary"
-        >
+        <button onClick={registerHandle} className="my-3 btn btn-primary">
           Sign in
         </button>
       </div>
