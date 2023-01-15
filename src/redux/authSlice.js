@@ -8,12 +8,38 @@ const initialState = {
   error: "",
 };
 
+export const signUpUser = createAsyncThunk("signupuser", async (body) => {
+  const res = await fetch("asdasdas", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  return await res.json();
+});
+
 const authSlice = createSlice({
   name: "user",
   initialState,
   reducersL: {},
 
-  extraReducers: {},
+  extraReducers: {
+    [signUpUser.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [signUpUser.fulfilled]: (state, { paylod: { error, msg } }) => {
+      state.loading = false;
+      if (error) {
+        state.error = error;
+      } else {
+        state.msg = msg;
+      }
+    },
+    [signUpUser.rejected]: (state, action) => {
+      state.loading = true;
+    },
+  },
 });
 
 export default authSlice.reducer;
